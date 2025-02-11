@@ -79,7 +79,7 @@ const Hero = () => {
           <br />
           <br />
           <br />
-          <Button href={url} white>
+          <Button href="/dashboard" white>
             Get started
           </Button>
           <br />
