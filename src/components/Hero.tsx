@@ -3,10 +3,10 @@
 import { curve } from "../../public/";
 import Section from "./Section";
 import { BackgroundCircles, BottomLine, Gradient } from "./design/Hero";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ButtonSvg from "./ui/svg/ButtonSvg";
-
+import { useAuth } from "@clerk/nextjs";
 export const Button = ({ className, href, onClick, children, px, white }) => {
   const classes = `button relative inline-flex items-center justify-center h-11 transition-colors hover:text-color-1 ${
     px || "px-7"
@@ -32,6 +32,15 @@ export const Button = ({ className, href, onClick, children, px, white }) => {
 
 const Hero = () => {
   const parallaxRef = useRef(null);
+  const { userId } = useAuth();
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    if (userId) {
+      setUrl("/dashboard");
+    } else {
+      setUrl("/sign-in");
+    }
+  }, [userId]);
 
   return (
     <Section
@@ -70,7 +79,7 @@ const Hero = () => {
           <br />
           <br />
           <br />
-          <Button href="/pricing" white>
+          <Button href={url} white>
             Get started
           </Button>
           <br />
